@@ -67,6 +67,7 @@ The following image is a Word document created table screen shot of important me
 
 ```{r}
 library(lubridate)
+library(dplyr)
 ```
 
 
@@ -231,7 +232,106 @@ data$weekDay
 write.csv(data,'ML_21daysResearch.csv',row.names=F)
 ```
 
+We have our data, now lets find out if the lipocavitation, cumulative number of lipocavitations, the waist trimmer size, calories consumed before working out, and the hours of sleep the night before, and also the number of minutes of cardio the day before have any effect on the waist line measurement and then the weight measurement.
+```{r}
+data$minutesCardioDayPrior <- lag(data$minutesOfCardioKickBoxing
+                                  , )
+```
 
+
+```{r}
+data$minutesCardioDayPrior[1] <- 0
+data$minutesCardioDayPrior
+```
+
+Lets use a simple linear model for those features on the outcome variable being the waist measurement.
+```{r}
+linearModel_waistline <- lm(waistlineMeasurement.BellyButton ~ lipocavitation + sumLipocavitationTreatments + waistTrimmer + calories_consumed_dayPrior + HoursOfSleep + minutesCardioDayPrior, data=data)
+```
+
+Usine linear regression to find out the importance of the features selected on waistline measurements, we have a summary below. If the p-value in the last column is less than 0.05 it is significant in having some effect on the waistline measurement, and if greater than 0.05 then not significant to include the feature as a body effect to waistline measurement using a 95% confidence interval. 
+```{r}
+summary(linearModel_waistline)
+```
+
+The above summary shows it is only 56% great at capturing all details on this model because of the R2 or residual standard error. The above says that the significant features having a p-value less than our significance leven or less than 0.05 on a 95% confidence interval. The caloreis consumed the day before and the sum of the lipocavitation treatments seem to be the only relevantly significant features to predict the waistline measurement. 
+
+Now lets do the same thing but on weight measurements.
+```{r}
+linearModel_weightScale <- lm(weightScaleMeasurement ~ lipocavitation + sumLipocavitationTreatments + waistTrimmer + calories_consumed_dayPrior + HoursOfSleep + minutesCardioDayPrior, data=data)
+
+```
+
+
+```{r}
+summary(linearModel_weightScale)
+```
+
+When using those features to determine the effects of the weight measurement, the only significant feature is the minutes of cardio the day before. This R squared measure of how well this model displays the data is only 45% reliable or effective.
+
+We can also split the data into testing and training sets with a 80-20 split on 22 observations. And see how well the models above predict our unobserved data.
+
+```{r}
+set.seed(5678)
+numberRandom <- sample(1:nrow(data), .8*nrow(data))
+
+training <- data[numberRandom,]
+testing <- data[-numberRandom,]
+
+```
+
+```{r}
+linearModel_waistline <- lm(waistlineMeasurement.BellyButton ~ lipocavitation + sumLipocavitationTreatments + waistTrimmer + calories_consumed_dayPrior + HoursOfSleep + minutesCardioDayPrior, data=training)
+```
+
+```{r}
+lm_waistline_prediction <- predict(linearModel_waistline, testing)
+```
+
+```{r}
+summary(linearModel_waistline)
+```
+
+The R-squared value is greater than 70% and this indicates the model is good at prediction.
+
+The following is a list of the 20% unobserved data held out to test the model on or five of the 22 total observations. The training set trained the model using the other 80% of the data or 17 observations.
+```{r}
+lm_waistline_prediction
+```
+
+The above indices are from unobserved or the hold out set in predicting our model. In our original data the indices, (1,2,6,11,18) are predicted above. Lets see what they were in reality.
+
+```{r}
+data$waistlineMeasurement.BellyButton[c(1,2,6,11,18)]
+```
+
+The predicted values above aren't too far off from the actual values immediately above. Most all the predicted values were underestimated for the waistline, but one for the 2nd entry because its value was overestimated. Now, lets see how the weight scale measurements turn out being predicted.
+```{r}
+linearModel_weightScale <- lm(weightScaleMeasurement ~ lipocavitation + sumLipocavitationTreatments + waistTrimmer + calories_consumed_dayPrior + HoursOfSleep + minutesCardioDayPrior, data=training)
+
+```
+
+```{r}
+lm_weight_prediction <- predict(linearModel_weightScale,testing)
+```
+
+```{r}
+summary(linearModel_weightScale)
+```
+This model for predicting the weight scale isn't as accurate as the model for predicting the waistline measurement using the same features and same training samples to predict on the same testing samples.The minutes of cardio the day prior seems to be the only feature significant in predicting the weight next day.
+Lets see the actual values for the weight measurements compared to the predicted values by our model.
+```{r}
+lm_weight_prediction
+```
+
+```{r}
+data$weightScaleMeasurement[c(1,2,6,11,18)]
+
+```
+
+We can see that predicted values in our weight prediction linear model underestimated all except the 2nd predicted value that was overestimated. This means there is more information excluded that can explain more results of the weight scale measurements. The same for the waistline measurements.
+
+We will get to that next.
 ```{r}
 
 ```
@@ -241,21 +341,9 @@ write.csv(data,'ML_21daysResearch.csv',row.names=F)
 
 ```
 
-
 ```{r}
 
 ```
-
-
-```{r}
-
-```
-
-
-```{r}
-
-```
-
 
 ```{r}
 
