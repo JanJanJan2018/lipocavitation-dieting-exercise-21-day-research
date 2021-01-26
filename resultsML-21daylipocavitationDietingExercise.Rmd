@@ -65,6 +65,10 @@ The following image is a Word document created table screen shot of important me
 ![results](./dailyImages/ResultsImagesWeightMeasurementWaist.png)
 
 
+```{r}
+library(lubridate)
+```
+
 
 ```{r}
 data <- read.csv('workout diet lipocavitation 1-4-2021 to 1-25-2021 -edited for ML.csv',
@@ -76,13 +80,163 @@ data
 str(data)
 ```
 
+In the features above, the weightLiftingIncrease_lbs or weightLiftingDecrease_lbs is a cumulative sum of the amount of weight per body part increased or decreased respectively when adding or removing weight from the sets of 3 per exercise in the weight training portion of exercise. For example, if I decide to increase weight that day to 65 lbs instead of 45 lbs on the pecs in the bench press and also increase the weight on the quads using the leg extension/knee extension by 5 lbs, I put 20+5 = 25 in the weightLiftingIncrease_lbs column. And if deciding to decrease the squats from 85 to 75 and decrease the military press by 10 lbs as well I would put -10+(-10)=-20 in the weightLiftingDecrease_lbs column.
+
+Also the trailing columns of glutenFree to meatFree are binary so that if followed the value is 1 for yes, and if not followed in the diet a 0 or zero value for no, not followed. The compressionSocks column is also binary for whether they were worn that day as a 1 and if not a 0.The morning_BM and coffee_cups columns are the count of bowel movements and cups of coffee throughout the day from 1 to 3. The MenstruationDay column is binary and a 1 if on menstruation and a 0 if not. The hours of sleep are approximate as an estimate of total hours of sleep from bed time to waking up. The date columns weren't read in as date columns and need to be done for the Date, time, and timeMeasurementsTaken columns. The weekDay.Date column can be made into a factor.
+
+
+```{r}
+
+data$weekDay.Date <- as.factor(data$weekDay.Date)
+
+```
+
+
+
+
+
+```{r}
+data$Date <- gsub('/','-',data$Date)
+data$Date
+```
+
+
+```{r}
+dateString <- strsplit(data$Date, split='-',perl=T)
+dateString
+```
+
+
+```{r}
+month <- lapply(dateString,'[',1)
+Month <- paste('0',month,sep='')
+
+day <- lapply(dateString,'[',2)
+day1 <- paste('0',day[1:6],sep='')
+day[1:6] <- day1
+
+year <- lapply(dateString,'[',3)
+
+date1 <- paste(Month,day,year,sep='-')
+
+date1
+```
+
+
+```{r}
+Date <- mdy(date1)
+Date #a Date object
+```
+
+
+```{r}
+Date2 <- as.Date(Date)
+Date2 #a Date object
+```
+
+```{r}
+Time <- data$time
+pm <- grep('PM', Time)
+am <- grep('AM', Time)
+
+PM <- Time[pm]
+PM <- gsub(' PM','',PM)
+PM <- gsub(':','-',PM)
+PM
+PM2 <- strsplit(PM,split='-')
+PM2
+
+hourPM <- lapply(PM2,'[',1)
+minutePM <- lapply(PM2,'[',2)
+
+hourPM <- as.integer(hourPM)
+minutePM <- as.integer(minutePM)
+
+AM <- Time[am]
+AM <- gsub(' AM','', AM)
+AM <- gsub(':','-',AM)
+AM
+AM2 <- strsplit(AM,split='-')
+AM2
+
+hourAM <- lapply(AM2,'[',1)
+minuteAM <- lapply(AM2,'[',2)
+
+hourAM <- as.integer(hourAM)
+minuteAM <- as.integer(minuteAM)
+
+hourPM2 <- hourPM+12
+PM3 <- paste(hourPM2,minutePM,sep=':')
+AM3 <- paste(hourAM,minuteAM,sep=':')
+
+PM3 <- gsub(':0',':00',PM3)
+AM3 <- gsub(':0',':00',AM3)
+AM4 <- paste('0',AM3,sep='')
+
+PM4 <- paste(PM3,':00',sep='')
+AM5 <- paste(AM4,':00',sep='')
+
+Time <- as.character(Time)
+
+Time[pm] <- PM4
+Time[am] <- AM5
+
+Time
+```
+
+```{r}
+Time2 <- hms(Time)
+Time2
+```
+
+
+
+```{r}
+DateHMS <- paste(Date2,Time2,sep=' ')
+DateHMS
+```
+
+
+```{r}
+Date3 <- paste(Date,Time,sep=' ') # a Date object and character vector
+Date3 # a character vector
+```
+
+
+```{r}
+# tz= "US/Pacific"
+
+DateTZ <- ymd_hms(Date3,tz="US/Pacific")
+tz(DateTZ)
+```
+
+
+```{r}
+DateTZ
+```
+
+```{r}
+data$Date_PacificTime <- DateTZ
+str(data)
+```
+
+
+```{r}
+data$weekDay <- wday(data$Date_PacificTime, label=T)
+data$weekDay
+```
+
+
+```{r}
+write.csv(data,'ML_21daysResearch.csv',row.names=F)
+```
+
 
 ```{r}
 
 ```
 
 
-
 ```{r}
 
 ```
@@ -106,12 +260,4 @@ str(data)
 ```{r}
 
 ```
-
-
-```{r}
-
-```
-
-
-
 
