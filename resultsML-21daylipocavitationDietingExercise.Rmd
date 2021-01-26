@@ -1,0 +1,76 @@
+---
+title: "Dieting Cardio Weight Training and Lipocavitation and Waist Trimmer"
+author: "Janis Corona"
+date: "1/26/2021"
+output: html_document
+---
+
+In this data, 21 days of experimenting on body effects in terms of body measurements in inches with a tape measure and with a fat caliper in mm and also with body weight on a scale that was changed during the research to a digital scale and estimated to accuracy with the manual scale that couldn't easily stay at 0. 
+
+This research started on Monday 1/4/2021 and ended Monday 1/25/2021 after the 21 days were completed that included rest days on Sunday of no lipocavitation or working out, but continued the diet. 
+
+Diet:
+The gluten free part of the diet was added mid research to see if any effects are noticed on the body. Otherwise, the dieting is daily and allows research subject of myself to eat as much of whatever I want but it cannot be alcohol, processed sweets, meats including seafood but can be plant based meat, and no added butter. The 
+
+Lipocavitation:
+Lipocavitation was done three times a week starting with Monday the 4th of January and ending on Saturday the 23rd of January. It was done on Mondays, Wednesdays, and Saturdays. The parts of the body where lipocavitation was done are the upper thighs, upper arms, and midsection of the body to include the sides and abdominal areas of fat. The time of the lipocavitation tools used on each body part was 5 minutes each body part. The tools used were at first vacuum at 1-3 notches for power of suction and frequency of suction at 20-65% RF frequency of an Radio Frequency able to reach 1 MHZ power. This had to be changed once bruising was notices on outer thighs and tricep areas of arms so that only the 6 pronged RF tool was used on the arms and legs at 60-65% RF power, and only the vacuum and rF combination tool was used on the midsection of the body at 20-25% RF power. 
+
+Exercise:
+The exercise part of the research was cardio kickboxing on a standing bag designed for kickboxing as well as weight training the total body with weights comfortable to do 3 sets of 10-12 repetitions each in 18 exercises all the same day and five times a week on Mondays, Tuesdays, Thursdays, Fridays, and Saturdays. Wednesday and Sundays there weren't any workouts. The cardio kickboxing started out using 20-30 minutes of a mixed set of rounds and time interval of rounds always with a one minute rest interval between rounds using onlineboxingtimer.com. Video documentation was done to record each round and might be uploaded to youtube after making into daily videos for kickboxing and linked to through this document. They are too large for github, but partial videos are available at my personal instagram account @janisharris1982 for information. Only the first set of each set of weight training exercises was documented with video for the workout days. Also on my instagram account publicly available. The weight training exercises were as follows but with some variances in permutations of grouped exercises:
+
+- shoulder lifts medial/posterior deltoids/latts 3 sets 10-12 reps 10 lbs
+- quads with leg extensions sitting 3 sets 10-12 reps 40 lbs
+- obliques side extensions 3 sets 12 reps 25 lbs
+- bench press 3 sets 10-12 reps barbell 65 lbs 
+
+- tricep extension above head dumbells 25 lbs 3 sets 10-12 reps
+- hamstrings leg flexion laying prone 3 sets 10-12 reps 35 lbs
+- calves 3 sets 12 reps 50 lbs total with dumbells
+- military press 3 sets 30 lb dumbells
+- upper trapezius shoulder shrugs 50 lbs dumbells 3 sets 10-12 reps
+
+- tricep chair dips 3 sets 12 reps no added weight
+- standing adductors 3 sets 10-12 reps 20 lbs
+- rhomboids scapula abduction 3 sets 12 reps 25 lbs
+- biceps curls 30 lbs 3 sets 10-12 
+- standing abducturs 3 sets 10-12 reps 20 lbs
+
+- squats 3 sets 10 reps barbell 45 lb + 40lbs added weight
+- leg lifts standing for abs, 3 sets 20 reps no added weight
+- dead lifts 3 sets 10-12 reps dumbells 50 lbs 
+- tricep extension rope standing 3 sets 25 lbs
+
+A worksheet was made that wasn't suitable for Machine learning with the string features of the notes and other features. But the data was made useable for ML was stored as a csv.
+
+The exercises done each day and order with weight changes as increases and decreases as a sum of all weight increased was added as features later to see if it plays a role in body effects.
+
+The diet of listed food items is also in the worksheet, but the calories, fat and saturated fat that is included in fat counts, carbohydrates, fiber that is included in carbohydrate counts, and protein counts all in grams and sodium in milligrams is listed each as their own feature.
+
+There was also a waist trimmer that was worn daily for most of the day but more so while at work during this workout and it is added as a feature to see if there are body effects such as the waistline measurement affected by the waist trimmer.
+
+The weather at the time of workout only was accounted for from the start of the workout which could change in a few hours after the workout was completed from cardio kickboxing and the 18 total body exercises done in 3 sets of 10-12 reps each.
+
+Compression socks were also worn at the end of the research about the last 4-5 days because the low iron and lymphedema of the research subject having an abdominal obstruction impacting veinous and lymphatic flow from a uterine fibroid. 
+
+Also note that bowel movements or BMs were noted as its own feature to see if the dieting, waist trimmer, or exercises had an effect on the number of BMs a day. Notes show if the BM was larger or not or more than one. Otherwise, not noted because of the regularity of research subject having them routinely daily after 1-2 cups of coffee.
+
+The number of cups of coffee drank in a day was also added as a feature and the number of hours of sleep approximately from the time of bed time to the time of waking up. Not every night was a sound sleepless night. Some interferences occured like cats meowing, alarms, fireworks, phone calls going off, roomate noises, etc. occured.
+
+The data can be retrieved at my github account: https://github.com/JanJanJan2018/lipocavitation-dieting-exercise-21-day-research and a search of the files needed. The worksheet has more detailed information that the csv file that we will input below to analyze and see body effects from this treatment over 3 weeks of dieting, exercise, and lipocavitation. 
+
+
+
+```{r}
+data <- read.csv('workout diet lipocavitation 1-4-2021 to 1-25-2021 -edited for ML.csv',
+                 sep=',', header=T)
+data
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
