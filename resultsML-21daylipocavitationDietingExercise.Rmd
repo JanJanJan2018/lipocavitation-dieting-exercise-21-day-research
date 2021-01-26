@@ -40,15 +40,17 @@ The exercise part of the research was cardio kickboxing on a standing bag design
 - dead lifts 3 sets 10-12 reps dumbells 50 lbs 
 - tricep extension rope standing 3 sets 25 lbs
 
-A worksheet was made that wasn't suitable for Machine learning with the string features of the notes and other features. But the data was made useable for ML was stored as a csv.
+A worksheet was made that wasn't suitable for Machine learning with the string features of the notes and other features. But the data was made useable for ML was stored as a csv.Also, the fractional measurement values in the worksheet were made numeric in the csv file to be properly handled for machine learning or ML in R. They otherwise will read in as character strings or factors that isn't useful.
 
 The exercises done each day and order with weight changes as increases and decreases as a sum of all weight increased was added as features later to see if it plays a role in body effects.
 
-The diet of listed food items is also in the worksheet, but the calories, fat and saturated fat that is included in fat counts, carbohydrates, fiber that is included in carbohydrate counts, and protein counts all in grams and sodium in milligrams is listed each as their own feature.
+The diet of listed food items is also in the worksheet, but the calories, fat and saturated fat that is included in fat counts, carbohydrates, fiber that is included in carbohydrate counts, and protein counts all in grams and sodium in milligrams is listed each as their own feature.Gluten free didn't start until the 16th or day 13 of our 21 days of research.
 
 There was also a waist trimmer that was worn daily for most of the day but more so while at work during this workout and it is added as a feature to see if there are body effects such as the waistline measurement affected by the waist trimmer.
 
-The weather at the time of workout only was accounted for from the start of the workout which could change in a few hours after the workout was completed from cardio kickboxing and the 18 total body exercises done in 3 sets of 10-12 reps each.
+The weather at the time of workout only was accounted for from the start of the workout which could change in a few hours after the workout was completed from cardio kickboxing and the 18 total body exercises done in 3 sets of 10-12 reps each available at https://www.timeanddate.com/weather/usa/corona/historic .I waited too long to add in the values of weather for 1/6/2021 Wednesday at 5:30 am the time of lipocavitation and found an average at https://www.accuweather.com/en/us/corona/92879/january-weather/332088 but not that time, low of 48 and high of 66, I input 48 as temperature. The weather fluctuated to cooler temps week 1, hotter temps week 2, and cold temps week 3 again by the end of that week. 
+
+Also, values that were null but literally meant no change like the increase or decrease in weight lifting weights were made 0 because there was no change. The only actual null values input were for the 1st Sunday the 10th because no measurements taken and I used the day prior's measurements as it was an off day for working out and lipocavitation but dieting was maintained. 
 
 Compression socks were also worn at the end of the research about the last 4-5 days because the low iron and lymphedema of the research subject having an abdominal obstruction impacting veinous and lymphatic flow from a uterine fibroid. 
 
@@ -57,6 +59,10 @@ Also note that bowel movements or BMs were noted as its own feature to see if th
 The number of cups of coffee drank in a day was also added as a feature and the number of hours of sleep approximately from the time of bed time to the time of waking up. Not every night was a sound sleepless night. Some interferences occured like cats meowing, alarms, fireworks, phone calls going off, roomate noises, etc. occured.
 
 The data can be retrieved at my github account: https://github.com/JanJanJan2018/lipocavitation-dieting-exercise-21-day-research and a search of the files needed. The worksheet has more detailed information that the csv file that we will input below to analyze and see body effects from this treatment over 3 weeks of dieting, exercise, and lipocavitation. 
+
+The following image is a Word document created table screen shot of important measures like the day the measurements were documented on lipocavitation days, the weight at that time, the calories consumed the day before, the time measurements taken, the minutes of cardio done the day before, and the waist trimmer worn. The top images are the side view without holding abs in, research subject has a uterine fibroid. These images could also show if the fibroid shrinks in appearance or grows with dieting, exercising, and lipocavitation. The 2nd row of images are the closest to straight into the camera with waist measurements being documented at that time. Day 22 is the results day after all 21 days were completed by routine schedule and following the rest day prior on Sunday.Also, day 22 diet and nutrition and other features are filled in, but they aren't part of this research, as they are observed on the same day the results are completed. This row was allowed for seeing results on the 22nd day with measurements and time taken since food was eaten during the day before the measurements were taken at 2 pm.
+
+![results](./dailyImages/ResultsImagesWeightMeasurementWaist.png)
 
 
 
@@ -67,10 +73,45 @@ data
 ```
 
 ```{r}
-
+str(data)
 ```
+
 
 ```{r}
 
 ```
+
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
 
