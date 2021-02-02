@@ -68,6 +68,7 @@ The following image is a Word document created table screen shot of important me
 ```{r}
 library(lubridate)
 library(dplyr)
+library(randomForest)
 ```
 
 
@@ -331,21 +332,302 @@ data$weightScaleMeasurement[c(1,2,6,11,18)]
 
 We can see that predicted values in our weight prediction linear model underestimated all except the 2nd predicted value that was overestimated. This means there is more information excluded that can explain more results of the weight scale measurements. The same for the waistline measurements.
 
-We will get to that next.
+We will get to that next. Lets look at how glutenFree, weightLiftingIncrease_lbs, morning_BM, coffee_cups, sodiumDailyIntake, fat_gram, saturatedFat_gram, protein_gram, fiber_grams_from_carbs,and minutesCardioDayPrior effect weight and waistline measures.
 ```{r}
-
+weight_linearModel2 <- lm(weightScaleMeasurement ~ glutenFree + weightLiftingIncrease_lbs + morning_BM + coffee_cups + sodiumDailyIntake + fat_gram + saturatedFat_gram +protein_gram+fiber_grams_from_carbs+minutesCardioDayPrior, data=training)
 ```
 
 
 ```{r}
+weight_linearModel2_prediction <- predict(weight_linearModel2, testing)
+```
+
+```{r}
+weight_linearModel2_prediction
+```
+
+```{r}
+data$weightScaleMeasurement[c(1,2,6,11,18)]
+```
+
+Lets see the summary of this model on the newest feature of mostly diet and metabolism features in our model.
+```{r}
+summary(weight_linearModel2)
+```
+
+From this model the R-squared is much higher with 89.6 which is very good, and we now have three features in our list that are significant in determining the weight which are the protein consumed, fiber consumed, and minutes of cardio the day prior. Lets see if we can use the weightChangeFromDayPrior using the nutrition features.
+```{r}
+weightChangeLinearModel <- lm(weightChangeFromDayPrior ~ fiber_grams_from_carbs + minutesCardioDayPrior + protein_gram + saturatedFat_gram + fat_gram + sodiumDailyIntake + dailyCalories, data=training)
+```
+
+```{r}
+weightPrediction2 <- predict(weightChangeLinearModel, testing)
+```
+
+```{r}
+summary(weightChangeLinearModel)
+```
+The model above is terrible. It would be predicting the change in weight today from what is eaten today. Which doesn't make sense. We need to predict the weight the next day, so lets add that feature.
+```{r}
+data$nextDayWeight <- lead(data$weightScaleMeasurement, 1)
+data$nextDayWeight[22] <- 143.8 #taken at 6 pm Tuesday 1/26/2021
+data$nextDayWeight
+```
+
+```{r}
+training <- data[numberRandom,]
+testing <- data[-numberRandom,]
+```
+
+
+```{r}
+nextDayWeight_LinearModel <- lm(nextDayWeight ~ fiber_grams_from_carbs + minutesCardioDayPrior + protein_gram + saturatedFat_gram + fat_gram + sodiumDailyIntake + dailyCalories, data=training)
+```
+
+
+```{r}
+nextDayWeightPrediction <- predict(nextDayWeight_LinearModel,training)
+```
+
+```{r}
+summary(nextDayWeight_LinearModel)
+```
+The above model is a little better, with 55% R-squared value. The saturated fat and total fat seem to be features that are significant in determining weight scale measurement the next day due to the p-value being significant at less than 0.05 for a 95% confidence interval. Since this research had no limits on calories consumed or mix of fat content to protein content and carb content of those calories, and weight training was done that builds muscle that is commonly known to weigh more than fat, looking at the weight scale doesn't really quantify body effects of exercise and this particular diet of no meat, alcohol, gluten, or processed sweets. The waist measurements could have some body effects from the diet and exercise and possibly the weight before. But lipocavitation was supposed to, by its claim, reduce fat along the areas treated and therefore reduce the daily measurements around the midsection, arms, and thighs that were treated 3 times a week. We should control for these tests to see if the lipocavitation does have some body effects on the measurements as the products for consumer grade lipocavitation claim. This product was a 5 in 1 lipocavitation machine bought on Amazon. 
+
+
+There are other ways of determining features associated with best prediction of weight or waistline or other body measurements. The trees approach uses either an ensemble of models with the best results as a random forest or a decision tree approach with gradient boosted models of classifiers that split from root to branches and need to be tuned and pruned for deciding the best predicted outcome. Since this is continuous data in the outcomes for measurements of weight or waistline the linear regression and naive bayes would be fine to predict a numeric value. But for trees the outcome variable would need to be a factor. Random forest can also be used for regression because it uses those models as an ensemble that use regression like non-linear, linear, and multinomial naive bayes predictors. 
+
+***
+
+Lets look at those features that we saw had some significance on either weightScaleMeasurement, nextDayWeight or waistlineMeasurement.BellyButton earlier, sumLipocavitationTreatments, minutesOfCardioKickBoxing, fat_gram, calories_consumed_dayPrior, and saturatedFat_gram.But also add in compressionSocks, morning_BM, waistTrimmer, and make a new variable called lipocavitationPrior for signaling if lipocavitation was done the day before to test the significance of the next day results on nextDayWeight and also make a new variable for nextDayWaistLineMeasurement.
+```{r}
+data$nextDayWaistLineMeasurement <- lead(data$waistlineMeasurement.BellyButton,1)
+data$nextDayWaistLineMeasurement[22] <- (31.5+31)/2 #NA in other data avg wed + mon
+
+data$lipocavitationPrior <- lag(data$lipocavitation,1)
+data$lipocavitationPrior[1] <- 0
 
 ```
 
 ```{r}
+training <- data[numberRandom,]
+testing <- data[-numberRandom,]
 
+nextDayWeightModel2 <- lm(nextDayWeight ~ sumLipocavitationTreatments+ minutesOfCardioKickBoxing+ fat_gram+calories_consumed_dayPrior+saturatedFat_gram +compressionSocks+morning_BM+waistTrimmer+lipocavitationPrior, data=training)
 ```
 
 ```{r}
+predNextDayWeight2 <- predict(nextDayWeightModel2,testing)
+```
+
+```{r}
+predNextDayWeight2
+```
+
+```{r}
+data$nextDayWeight[c(1,2,6,11,18)]
+```
+
+```{r}
+summary(nextDayWeightModel2)
+```
+
+There isn't anything significant on these features for determining next day weight. Lets try and see how lipocavitation works compared with the waist trimmer on waist line measurements.
+```{r}
+lipoTrimmerLM <- lm(waistlineMeasurement.BellyButton ~ lipocavitationPrior + lipocavitation + sumLipocavitationTreatments + waistTrimmer, data=data)
+summary(lipoTrimmerLM)
+```
+
+The results used on all the data show no significance in either using lipocavitation or a waist trimmer in determing the waistline measurement. This isn't good at all since, the products of the 5-in-1 lipocavitation machine and the waist trimmer say they reduce fat, slim, and can make the waist smaller. The waist trimmer does make the waist smaller while wearing it and for a few hours afterwards. Lets try a different model and see how the random forest regression model does with the same variables above.
+
+See ??randomForest or R: Classification and Regression with Random Forest documentation.
+
+```{r}
+set.seed(234)
+x <- training[,c(13, 7,8,36,49)]
+
+lipoTrimmer_RF <- randomForest(waistlineMeasurement.BellyButton ~ ., data = x,importance=TRUE,type="regression")
+
+summary(lipoTrimmer_RF)
+importance(lipoTrimmer_RF)
+```
+
+The more important feature of the above has the higher score which is the sum of lipocavitation treatments the day the waistline measurement at the belly button was taken is more important or significant on the waistline measurement for that day than having lipocavitation that day, wearing a waist trimmer, or if lipocavitation was done the day prior. 
+
+We know from our models above the significant variables on predicting the weight the next day is the fat and saturated fat consumed that day. We also know that the minutes of cardio the day before and oddly the amount of fiber and protein eaten that day have significance in predicting the weight taken that day. Lets see how minutesOfCardioKickBoxing, dailyCalories, fat_gram, saturatedFat_gram, protein_gram, fiber_grams_from_carbs, and weightLiftingIncrease_lbs can predict the nextDayWeight.We will use the linear model first and then the random forest model to see the side by side results.
+```{r}
+cardioDiet_LM <- lm(nextDayWeight ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training)
+```
+
+```{r}
+cardioDiet_Predict <- predict(cardioDiet_LM,testing)
+
+df <- as.data.frame(cbind(cardioDiet_Predict,testing$nextDayWeight))
+colnames(df) <- c('predictedNextDayWeight','actualNextDayWeight')
+df$actual_PredictedError <- df$actualNextDayWeight-df$predictedNextDayWeight
+df
 
 ```
 
+The predicted weights weren't off by more than 2.55 lbs and the closest predicted weight was within 1/2 lb. Lets look at the summary of what these features' weighted predictions as a linear model.
+
+```{r}
+summary(cardioDiet_LM)
+```
+
+In the linear model above, none of the features we selected were significant as none of the p-values are less than 0.05 at the 95% confidence interval and 5% significance level. And before that the predicted side by side comparison to the actual values in our hold out set or testing set predicted within 1/2-3 lb weight differences the next day. But our summary shows that for every 4.25 minutes of cardio the weight the next day is a pound heavier, a decrease in calories of 1.62 will increase weight a lb, increasing the fat gram intake to 5.01 will increase weight a lb next day, but lowering the saturated fat grams by 6.58 will also increase the weight the next day, increasing protein gram intake to 1.81 will increase weight 1 lb, increasing fiber gram intake increases weight a lb, and increasing the weight used when weightlifting to 1.09 lbs increases weight a lb. Which honestly all doesn't make sense, but that is why the linear model isn't the best model but a good way of approximating an outcome. Since none of these features are significant together when predicting next day weight. Lets see how they do with waist measurements the next day before testing with the random forest model. Which uses linear and multinomial naive bayes with different tuning parameters as an ensemble of models to pick or vote the best model that gets closest to the actual value. 
+```{r}
+cardioDiet_LM2 <- lm(nextDayWaistLineMeasurement ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training)
+```
+
+```{r}
+cardioDiet_Predict2 <- predict(cardioDiet_LM2,testing)
+
+df2 <- as.data.frame(cbind(cardioDiet_Predict2,testing$nextDayWaistLineMeasurement))
+colnames(df2) <- c('predictedNextDayWaistMeasurement','actualNextDayWaistMeasurement')
+df2$actual_PredictedError <- df2$actualNextDayWaistMeasurement-df2$predictedNextDayWaistMeasurement
+df2
+
+```
+
+The error in predicting the next day waist line measurement was from under predicting 2/5" to over predicting by 1 1/5". Lets look at the summary noting that most of the predicted values were within 1/2" accuracy.
+
+```{r}
+summary(cardioDiet_LM2)
+```
+
+We also can see from the linear model above that these features as a set aren't significant in predicting the next day waist line measurement at the 5% significance level. But lets interpret what it says about these features. The minutes of cardio, daily calories, protein, fiber, and fat intake are less than 1% of influencing the increase in the waist line measurement the next day by 1" but decreasing the saturated fat by 3.7% and increasing the weight by 2% will have an affect on increasing the next day waist line measurement by 1."
+
+Lets now see what our random forest models of these two linear modeled features says about next day weight and waist line measurements.
+```{r}
+cardioDiet_RF <- randomForest(nextDayWeight ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training, importance=TRUE,type="regression")
+
+summary(cardioDiet_RF)
+importance(cardioDiet_RF)
+```
+
+From the above importance of features measures we can see that the most important feature in predicting next day weight using our random forest model is the fat grams consumed a day before the weight measurement, the next important is the protein grams consumed, and after that is the saturated fat then daily calories, fiber, minutes of cardio, and finally least important is the increase in weight during weight lifting the day before the weight measurement is taken.
+```{r}
+cardioDiet_Predict_RF <- predict(cardioDiet_RF,testing)
+
+df3 <- as.data.frame(cbind(cardioDiet_Predict_RF,testing$nextDayWeight))
+colnames(df3) <- c('predictedNextDayWeight','actualNextDayWeight')
+df3$actual_PredictedError <- df3$actualNextDayWeight-df3$predictedNextDayWeight
+df3
+```
+
+The results above show how the random forest model predicted the actual weight - the predicted weight as an error. The range in prediction values is from under predicting 2.78 lbs to overpredicting by 1.85 lbs. 
+
+Now, we will look at how our features predict the next day waist measurement with our random forest algorithm.
+```{r}
+cardioDiet_RF2 <- randomForest(nextDayWaistLineMeasurement ~ 
+                                 minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training, importance=TRUE,type="regression")
+
+summary(cardioDiet_RF2)
+importance(cardioDiet_RF2)
+```
+
+
+```{r}
+cardioDiet_Predict_RF2 <- predict(cardioDiet_RF2,testing)
+
+df4 <- as.data.frame(cbind(cardioDiet_Predict_RF2,
+                           testing$nextDayWaistLineMeasurement))
+colnames(df4) <- c('predictedNextDayWaist','actualNextDayWaist')
+df4$actual_PredictedError <- df4$actualNextDayWaist-df4$predictedNextDayWaist
+df4
+```
+
+Above we can see the data frame of predicted waistline measurements to actual waistline measurements and the error in actual-predicted. The error is in a range of 1/100th of an inch to about 4/5" in predicting the next day waistline measurement. Slightly better than our linear model for predicting the next day waistline measurement.
+
+We made the time variables earlier that are actually time or date features recognized by R, but now I am going to see what findings can be plotted to visualize what these features do to the waistline measurements and weight measurements using Tableau. Lets write this new data of elements to our csv file for plotting in Tableau. But before we do, lets just see what these features are with a str().
+
+```{r}
+str(data)
+```
+
+Great looks good. Now we will write this out to csv.
+```{r}
+write.csv(data,'ML_21dayResearch_addedFeatures.csv',row.names=F)
+```
+
+***
+
+I have a blog that I need to post to inform clients on the effects of lipocavitation added to massage for reducing fat and body circumference and thereby having a positive affect in combination with lymphatic drainage as less body weight or pressure surrounding the lymph vessels and veins will lead to better circulation and less edema in the body limbs. Lets see how lipocavitation and the number of lipocavitation treatments are effective in reducing fat content by looking at any of the areas treated, like the abs, arms, or legs and only use those lipocavitation variables.
+```{r}
+lipocavitation_RF <- randomForest(innerThighFat.MM.R ~ 
+                                 sumLipocavitationTreatments +
+                      lipocavitationPrior,
+                    data = training, importance=TRUE,type="regression")
+
+summary(lipocavitation_RF)
+importance(lipocavitation_RF)
+```
+
+The sum of the lipocavitation treatments prior to taking the thigh fat caliper measure in MM is more important than if lipocavitation was done the day before or prior to the measurement.
+
+Lets see these predicted values next to our actual measurements.
+```{r}
+lipocavitation_Predict_RF <- predict(lipocavitation_RF,testing)
+
+df5 <- as.data.frame(cbind(lipocavitation_Predict_RF,
+                           testing$innerThighFat.MM.R))
+colnames(df5) <- c('predicted_R_ThighMeasure','actual_R_ThighMeasure')
+df5$actual_PredictedError <- df5$actual_R_ThighMeasure-df5$predicted_R_ThighMeasure
+df5
+```
+
+Lets look at the linear model for predicting thigh fat MM measurements using the same lipocavitation features.
+```{r}
+lipocavitation_ML <- lm(innerThighFat.MM.L ~ 
+                                 sumLipocavitationTreatments +
+                      lipocavitationPrior,
+                    data = training)
+
+summary(lipocavitation_ML)
+```
+
+The above summary shows that the sum of lipocavitation treatments is significant at the 5% significance level for predicting the thigh measurement of the left thigh in mm of fat. Whether or not lipocavitation was done the day prior is not significant. But the measurement of the thigh fat increases 1 mm for every decrease in the sum of previous lipocavitation treatments of 81.1% from the next sum, or almost every treatment of lipocavitation will decrease the thigh fat measurements by an MM. The error with linear models is that the values can range outside of 0-100% of probability that is supposed to be between 0 and 1. So that not doing lipocavitation or having a sum of zero lipocavitations implies that the fat measurement on the left thigh will be increasing 81.1% of a MM and that a sum of lipocavitation treatments greater than 37 treatments will give a left thigh measurement of less than 0 if starting from 30 MM and decreasing by approximately 3/4 MM each treatment.
+```{r}
+30/0.811
+```
+The above shows how many times 3/4 approximately goes into the maximum left thigh measure in MM. Those probabilities next to reality are not likely. But lets see the range that is more realistic for our predicted linear model results compared to actual left thigh measurements in MM.
+```{r}
+lipocavitation_Predict_ML <- predict(lipocavitation_ML,testing)
+
+df6 <- as.data.frame(cbind(lipocavitation_Predict_ML,
+                           testing$innerThighFat.MM.L))
+colnames(df6) <- c('predicted_L_ThighMeasure','actual_L_ThighMeasure')
+df6$actual_PredictedError <- df6$actual_L_ThighMeasure-df6$predicted_L_ThighMeasure
+df6
+```
+
+Our results show that the linear model over predicted the left thigh fat measurement in MM by up to 11.3 MM and under predicted as low as 4.9 MM using just the sum of lipocavitation treatments and whether or not lipocavitation was done the day before or prior to the left thigh measurement. 

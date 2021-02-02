@@ -427,6 +427,14 @@ summary {
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
 <pre class="r"><code>data &lt;- read.csv(&#39;workout diet lipocavitation 1-4-2021 to 1-25-2021 -edited for ML.csv&#39;,
                  sep=&#39;,&#39;, header=T)
 data</code></pre>
@@ -546,51 +554,51 @@ data</code></pre>
 ## 21                  11.50                  11.50                    22.50
 ## 22                  11.25                  11.25                    22.50
 ##    thighMeasurementInches.L absFat.MM.R absFat.MM.L tricepsFat.MM.R
-## 1                     22.63        30.0        30.0            20.6
-## 2                     23.50        20.2        20.2            20.2
-## 3                     23.25        20.0        20.0            20.0
-## 4                     23.75        20.2        20.2            20.0
-## 5                     24.00        20.4        20.4            20.2
-## 6                     24.00        20.2        20.2            20.2
-## 7                     24.00        20.2        20.2            20.2
-## 8                     23.00        20.2        20.2            20.2
-## 9                     23.00        20.0        20.0            20.2
-## 10                    23.00        20.0        20.2            20.0
-## 11                    23.50        20.0        20.2            20.4
-## 12                    23.50        20.0        20.2            20.2
-## 13                    23.00        20.2        20.4            20.2
-## 14                    23.00        20.0        20.0            20.0
-## 15                    22.50        20.0        20.0            20.0
-## 16                    22.50        20.0        20.0            20.0
-## 17                    22.75        20.0        20.0            20.0
-## 18                    22.00        20.0        20.2            20.2
-## 19                    23.00        10.8        20.0            20.2
-## 20                    22.50        20.0        20.2            10.8
-## 21                    22.50        20.2        20.2            20.2
-## 22                    22.50        20.0        20.0            20.0
+## 1                     22.63          30          30              26
+## 2                     23.50          22          22              22
+## 3                     23.25          20          20              20
+## 4                     23.75          22          22              20
+## 5                     24.00          24          24              22
+## 6                     24.00          22          22              22
+## 7                     24.00          22          22              22
+## 8                     23.00          22          22              22
+## 9                     23.00          20          20              22
+## 10                    23.00          20          22              20
+## 11                    23.50          20          22              24
+## 12                    23.50          20          22              22
+## 13                    23.00          22          24              22
+## 14                    23.00          20          20              20
+## 15                    22.50          20          20              20
+## 16                    22.50          20          20              20
+## 17                    22.75          20          20              20
+## 18                    22.00          20          22              22
+## 19                    23.00          18          20              22
+## 20                    22.50          20          22              18
+## 21                    22.50          22          22              22
+## 22                    22.50          20          20              20
 ##    tricepsFat.MM.L innerThighFat.MM.R innerThighFat.MM.L dailyCalories fat_gram
-## 1             20.8               20.8               20.8       1826.50    41.50
-## 2             20.2               20.2               20.0       1884.00    61.25
-## 3             20.0               10.6               10.6       2508.00    72.00
-## 4             20.0               20.2               20.2       1811.50    59.00
-## 5             20.4               10.6               10.6       1963.00    73.85
-## 6             20.2               10.6               20.0       1407.00    39.00
-## 7             20.2               10.6               20.0       2541.00   100.10
-## 8             20.2               10.4               10.4       2244.00    82.00
-## 9             20.2               10.2               10.2       2961.00    95.34
-## 10            20.0               10.2               10.2       2526.00    78.68
-## 11            20.2               10.2               10.4       2709.00    83.68
-## 12            20.2               10.2               10.2       2163.00    60.68
-## 13            20.2               10.4               10.2       1777.00    63.84
-## 14            20.2               10.0               10.2       2295.00    60.84
-## 15            20.0               10.0               10.2       2238.00    72.34
-## 16            20.0               10.4               10.4       2688.00   113.34
-## 17            20.0               10.2               10.4       2526.00   102.68
-## 18            20.2               10.4               10.2       2418.00    88.34
-## 19            20.0               10.6               10.2       1353.50    72.00
-## 20            10.8               10.2               10.0       1973.75    42.00
-## 21            20.2               10.2               10.4       1681.25    31.60
-## 22            20.0               10.0               10.0       2655.60   143.02
+## 1               28                 28                 28       1826.50    41.50
+## 2               22                 22                 20       1884.00    61.25
+## 3               20                 16                 16       2508.00    72.00
+## 4               20                 22                 22       1811.50    59.00
+## 5               24                 16                 16       1963.00    73.85
+## 6               22                 16                 20       1407.00    39.00
+## 7               22                 16                 20       2541.00   100.10
+## 8               22                 14                 14       2244.00    82.00
+## 9               22                 12                 12       2961.00    95.34
+## 10              20                 12                 12       2526.00    78.68
+## 11              22                 12                 14       2709.00    83.68
+## 12              22                 12                 12       2163.00    60.68
+## 13              22                 14                 12       1777.00    63.84
+## 14              22                 10                 12       2295.00    60.84
+## 15              20                 10                 12       2238.00    72.34
+## 16              20                 14                 14       2688.00   113.34
+## 17              20                 12                 14       2526.00   102.68
+## 18              22                 14                 12       2418.00    88.34
+## 19              20                 16                 12       1353.50    72.00
+## 20              18                 12                 10       1973.75    42.00
+## 21              22                 12                 14       1681.25    31.60
+## 22              20                 10                 10       2655.60   143.02
 ##    saturatedFat_gram protein_gram carbs_grams fiber_grams_from_carbs
 ## 1              11.50        42.00      172.50                  29.50
 ## 2              31.25        63.00      236.50                  32.00
@@ -725,12 +733,12 @@ data</code></pre>
 ##  $ armMeasurementInches.L          : num  12.2 11.5 12 12 12 ...
 ##  $ thighMeasurementInches.R        : num  22.6 23.5 23.2 23.8 24 ...
 ##  $ thighMeasurementInches.L        : num  22.6 23.5 23.2 23.8 24 ...
-##  $ absFat.MM.R                     : num  30 20.2 20 20.2 20.4 20.2 20.2 20.2 20 20 ...
-##  $ absFat.MM.L                     : num  30 20.2 20 20.2 20.4 20.2 20.2 20.2 20 20.2 ...
-##  $ tricepsFat.MM.R                 : num  20.6 20.2 20 20 20.2 20.2 20.2 20.2 20.2 20 ...
-##  $ tricepsFat.MM.L                 : num  20.8 20.2 20 20 20.4 20.2 20.2 20.2 20.2 20 ...
-##  $ innerThighFat.MM.R              : num  20.8 20.2 10.6 20.2 10.6 10.6 10.6 10.4 10.2 10.2 ...
-##  $ innerThighFat.MM.L              : num  20.8 20 10.6 20.2 10.6 20 20 10.4 10.2 10.2 ...
+##  $ absFat.MM.R                     : int  30 22 20 22 24 22 22 22 20 20 ...
+##  $ absFat.MM.L                     : int  30 22 20 22 24 22 22 22 20 22 ...
+##  $ tricepsFat.MM.R                 : int  26 22 20 20 22 22 22 22 22 20 ...
+##  $ tricepsFat.MM.L                 : int  28 22 20 20 24 22 22 22 22 20 ...
+##  $ innerThighFat.MM.R              : int  28 22 16 22 16 16 16 14 12 12 ...
+##  $ innerThighFat.MM.L              : int  28 20 16 22 16 20 20 14 12 12 ...
 ##  $ dailyCalories                   : num  1826 1884 2508 1812 1963 ...
 ##  $ fat_gram                        : num  41.5 61.2 72 59 73.8 ...
 ##  $ saturatedFat_gram               : num  11.5 31.2 38.5 16 18.8 ...
@@ -1038,12 +1046,12 @@ str(data)</code></pre>
 ##  $ armMeasurementInches.L          : num  12.2 11.5 12 12 12 ...
 ##  $ thighMeasurementInches.R        : num  22.6 23.5 23.2 23.8 24 ...
 ##  $ thighMeasurementInches.L        : num  22.6 23.5 23.2 23.8 24 ...
-##  $ absFat.MM.R                     : num  30 20.2 20 20.2 20.4 20.2 20.2 20.2 20 20 ...
-##  $ absFat.MM.L                     : num  30 20.2 20 20.2 20.4 20.2 20.2 20.2 20 20.2 ...
-##  $ tricepsFat.MM.R                 : num  20.6 20.2 20 20 20.2 20.2 20.2 20.2 20.2 20 ...
-##  $ tricepsFat.MM.L                 : num  20.8 20.2 20 20 20.4 20.2 20.2 20.2 20.2 20 ...
-##  $ innerThighFat.MM.R              : num  20.8 20.2 10.6 20.2 10.6 10.6 10.6 10.4 10.2 10.2 ...
-##  $ innerThighFat.MM.L              : num  20.8 20 10.6 20.2 10.6 20 20 10.4 10.2 10.2 ...
+##  $ absFat.MM.R                     : int  30 22 20 22 24 22 22 22 20 20 ...
+##  $ absFat.MM.L                     : int  30 22 20 22 24 22 22 22 20 22 ...
+##  $ tricepsFat.MM.R                 : int  26 22 20 20 22 22 22 22 22 20 ...
+##  $ tricepsFat.MM.L                 : int  28 22 20 20 24 22 22 22 22 20 ...
+##  $ innerThighFat.MM.R              : int  28 22 16 22 16 16 16 14 12 12 ...
+##  $ innerThighFat.MM.L              : int  28 20 16 22 16 20 20 14 12 12 ...
 ##  $ dailyCalories                   : num  1826 1884 2508 1812 1963 ...
 ##  $ fat_gram                        : num  41.5 61.2 72 59 73.8 ...
 ##  $ saturatedFat_gram               : num  11.5 31.2 38.5 16 18.8 ...
@@ -1214,7 +1222,578 @@ testing &lt;- data[-numberRandom,]</code></pre>
 <pre class="r"><code>data$weightScaleMeasurement[c(1,2,6,11,18)]</code></pre>
 <pre><code>## [1] 142.0 141.0 147.6 145.4 146.4</code></pre>
 <p>We can see that predicted values in our weight prediction linear model underestimated all except the 2nd predicted value that was overestimated. This means there is more information excluded that can explain more results of the weight scale measurements. The same for the waistline measurements.</p>
-<p>We will get to that next.</p>
+<p>We will get to that next. Lets look at how glutenFree, weightLiftingIncrease_lbs, morning_BM, coffee_cups, sodiumDailyIntake, fat_gram, saturatedFat_gram, protein_gram, fiber_grams_from_carbs,and minutesCardioDayPrior effect weight and waistline measures.</p>
+<pre class="r"><code>weight_linearModel2 &lt;- lm(weightScaleMeasurement ~ glutenFree + weightLiftingIncrease_lbs + morning_BM + coffee_cups + sodiumDailyIntake + fat_gram + saturatedFat_gram +protein_gram+fiber_grams_from_carbs+minutesCardioDayPrior, data=training)</code></pre>
+<pre class="r"><code>weight_linearModel2_prediction &lt;- predict(weight_linearModel2, testing)</code></pre>
+<pre class="r"><code>weight_linearModel2_prediction</code></pre>
+<pre><code>##        1        2        6       11       18 
+## 142.2778 143.7087 146.1878 141.7773 143.2913</code></pre>
+<pre class="r"><code>data$weightScaleMeasurement[c(1,2,6,11,18)]</code></pre>
+<pre><code>## [1] 142.0 141.0 147.6 145.4 146.4</code></pre>
+<p>Lets see the summary of this model on the newest feature of mostly diet and metabolism features in our model.</p>
+<pre class="r"><code>summary(weight_linearModel2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = weightScaleMeasurement ~ glutenFree + weightLiftingIncrease_lbs + 
+##     morning_BM + coffee_cups + sodiumDailyIntake + fat_gram + 
+##     saturatedFat_gram + protein_gram + fiber_grams_from_carbs + 
+##     minutesCardioDayPrior, data = training)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.99860 -0.26384 -0.09609  0.30466  0.96370 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                1.436e+02  3.462e+00  41.476 1.31e-08 ***
+## glutenFree                 3.878e-01  7.201e-01   0.539   0.6096    
+## weightLiftingIncrease_lbs  3.170e-02  2.099e-02   1.510   0.1817    
+## morning_BM                 1.388e+00  8.537e-01   1.626   0.1550    
+## coffee_cups               -1.117e+00  1.131e+00  -0.988   0.3615    
+## sodiumDailyIntake         -4.413e-04  3.335e-04  -1.323   0.2340    
+## fat_gram                   3.661e-02  2.476e-02   1.479   0.1896    
+## saturatedFat_gram         -6.402e-02  4.737e-02  -1.352   0.2253    
+## protein_gram               5.567e-02  1.688e-02   3.297   0.0165 *  
+## fiber_grams_from_carbs    -9.833e-02  3.895e-02  -2.524   0.0450 *  
+## minutesCardioDayPrior      9.313e-02  2.983e-02   3.122   0.0205 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9601 on 6 degrees of freedom
+## Multiple R-squared:  0.8961, Adjusted R-squared:  0.7229 
+## F-statistic: 5.174 on 10 and 6 DF,  p-value: 0.02847</code></pre>
+<p>From this model the R-squared is much higher with 89.6 which is very good, and we now have three features in our list that are significant in determining the weight which are the protein consumed, fiber consumed, and minutes of cardio the day prior. Lets see if we can use the weightChangeFromDayPrior using the nutrition features.</p>
+<pre class="r"><code>weightChangeLinearModel &lt;- lm(weightChangeFromDayPrior ~ fiber_grams_from_carbs + minutesCardioDayPrior + protein_gram + saturatedFat_gram + fat_gram + sodiumDailyIntake + dailyCalories, data=training)</code></pre>
+<pre class="r"><code>weightPrediction2 &lt;- predict(weightChangeLinearModel, testing)</code></pre>
+<pre class="r"><code>summary(weightChangeLinearModel)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = weightChangeFromDayPrior ~ fiber_grams_from_carbs + 
+##     minutesCardioDayPrior + protein_gram + saturatedFat_gram + 
+##     fat_gram + sodiumDailyIntake + dailyCalories, data = training)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0255 -0.6926 -0.3920  1.5309  3.1476 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)            -4.190061   3.976294  -1.054    0.319
+## fiber_grams_from_carbs -0.054749   0.067749  -0.808    0.440
+## minutesCardioDayPrior   0.013561   0.059849   0.227    0.826
+## protein_gram            0.008969   0.038380   0.234    0.820
+## saturatedFat_gram      -0.003954   0.090867  -0.044    0.966
+## fat_gram               -0.017487   0.062647  -0.279    0.786
+## sodiumDailyIntake      -0.001129   0.001039  -1.086    0.306
+## dailyCalories           0.004841   0.004565   1.060    0.317
+## 
+## Residual standard error: 2.437 on 9 degrees of freedom
+## Multiple R-squared:  0.2603, Adjusted R-squared:  -0.315 
+## F-statistic: 0.4524 on 7 and 9 DF,  p-value: 0.8459</code></pre>
+<p>The model above is terrible. It would be predicting the change in weight today from what is eaten today. Which doesn’t make sense. We need to predict the weight the next day, so lets add that feature.</p>
+<pre class="r"><code>data$nextDayWeight &lt;- lead(data$weightScaleMeasurement, 1)
+data$nextDayWeight[22] &lt;- 143.8 #taken at 6 pm Tuesday 1/26/2021
+data$nextDayWeight</code></pre>
+<pre><code>##  [1] 141.0 142.0 143.0 144.0 147.6 145.4 141.8 146.6 143.8 145.4 145.4 143.8
+## [13] 143.8 143.8 146.4 147.6 146.4 147.2 144.2 143.8 141.6 143.8</code></pre>
+<pre class="r"><code>training &lt;- data[numberRandom,]
+testing &lt;- data[-numberRandom,]</code></pre>
+<pre class="r"><code>nextDayWeight_LinearModel &lt;- lm(nextDayWeight ~ fiber_grams_from_carbs + minutesCardioDayPrior + protein_gram + saturatedFat_gram + fat_gram + sodiumDailyIntake + dailyCalories, data=training)</code></pre>
+<pre class="r"><code>nextDayWeightPrediction &lt;- predict(nextDayWeight_LinearModel,training)</code></pre>
+<pre class="r"><code>summary(nextDayWeight_LinearModel)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = nextDayWeight ~ fiber_grams_from_carbs + minutesCardioDayPrior + 
+##     protein_gram + saturatedFat_gram + fat_gram + sodiumDailyIntake + 
+##     dailyCalories, data = training)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -3.11917 -0.66491 -0.09671  0.73508  2.19654 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             1.445e+02  2.648e+00  54.577 1.17e-12 ***
+## fiber_grams_from_carbs -6.596e-03  4.511e-02  -0.146   0.8870    
+## minutesCardioDayPrior  -3.907e-02  3.985e-02  -0.980   0.3525    
+## protein_gram            3.070e-02  2.556e-02   1.201   0.2602    
+## saturatedFat_gram      -1.489e-01  6.050e-02  -2.460   0.0361 *  
+## fat_gram                1.079e-01  4.171e-02   2.586   0.0294 *  
+## sodiumDailyIntake       8.955e-04  6.920e-04   1.294   0.2279    
+## dailyCalories          -3.573e-03  3.040e-03  -1.176   0.2699    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.623 on 9 degrees of freedom
+## Multiple R-squared:  0.5516, Adjusted R-squared:  0.2029 
+## F-statistic: 1.582 on 7 and 9 DF,  p-value: 0.2556</code></pre>
+<p>The above model is a little better, with 55% R-squared value. The saturated fat and total fat seem to be features that are significant in determining weight scale measurement the next day due to the p-value being significant at less than 0.05 for a 95% confidence interval. Since this research had no limits on calories consumed or mix of fat content to protein content and carb content of those calories, and weight training was done that builds muscle that is commonly known to weigh more than fat, looking at the weight scale doesn’t really quantify body effects of exercise and this particular diet of no meat, alcohol, gluten, or processed sweets. The waist measurements could have some body effects from the diet and exercise and possibly the weight before. But lipocavitation was supposed to, by its claim, reduce fat along the areas treated and therefore reduce the daily measurements around the midsection, arms, and thighs that were treated 3 times a week. We should control for these tests to see if the lipocavitation does have some body effects on the measurements as the products for consumer grade lipocavitation claim. This product was a 5 in 1 lipocavitation machine bought on Amazon.</p>
+<p>There are other ways of determining features associated with best prediction of weight or waistline or other body measurements. The trees approach uses either an ensemble of models with the best results as a random forest or a decision tree approach with gradient boosted models of classifiers that split from root to branches and need to be tuned and pruned for deciding the best predicted outcome. Since this is continuous data in the outcomes for measurements of weight or waistline the linear regression and naive bayes would be fine to predict a numeric value. But for trees the outcome variable would need to be a factor. Random forest can also be used for regression because it uses those models as an ensemble that use regression like non-linear, linear, and multinomial naive bayes predictors.</p>
+<hr />
+<p>Lets look at those features that we saw had some significance on either weightScaleMeasurement, nextDayWeight or waistlineMeasurement.BellyButton earlier, sumLipocavitationTreatments, minutesOfCardioKickBoxing, fat_gram, calories_consumed_dayPrior, and saturatedFat_gram.But also add in compressionSocks, morning_BM, waistTrimmer, and make a new variable called lipocavitationPrior for signaling if lipocavitation was done the day before to test the significance of the next day results on nextDayWeight and also make a new variable for nextDayWaistLineMeasurement.</p>
+<pre class="r"><code>data$nextDayWaistLineMeasurement &lt;- lead(data$waistlineMeasurement.BellyButton,1)
+data$nextDayWaistLineMeasurement[22] &lt;- (31.5+31)/2 #NA in other data avg wed + mon
+
+data$lipocavitationPrior &lt;- lag(data$lipocavitation,1)
+data$lipocavitationPrior[1] &lt;- 0</code></pre>
+<pre class="r"><code>training &lt;- data[numberRandom,]
+testing &lt;- data[-numberRandom,]
+
+nextDayWeightModel2 &lt;- lm(nextDayWeight ~ sumLipocavitationTreatments+ minutesOfCardioKickBoxing+ fat_gram+calories_consumed_dayPrior+saturatedFat_gram +compressionSocks+morning_BM+waistTrimmer+lipocavitationPrior, data=training)</code></pre>
+<pre class="r"><code>predNextDayWeight2 &lt;- predict(nextDayWeightModel2,testing)</code></pre>
+<pre class="r"><code>predNextDayWeight2</code></pre>
+<pre><code>##        1        2        6       11       18 
+## 143.6054 142.7209 143.8611 145.4673 144.3206</code></pre>
+<pre class="r"><code>data$nextDayWeight[c(1,2,6,11,18)]</code></pre>
+<pre><code>## [1] 141.0 142.0 145.4 145.4 147.2</code></pre>
+<pre class="r"><code>summary(nextDayWeightModel2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = nextDayWeight ~ sumLipocavitationTreatments + minutesOfCardioKickBoxing + 
+##     fat_gram + calories_consumed_dayPrior + saturatedFat_gram + 
+##     compressionSocks + morning_BM + waistTrimmer + lipocavitationPrior, 
+##     data = training)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.1268 -0.4092  0.0876  0.5997  2.2572 
+## 
+## Coefficients:
+##                               Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)                  1.338e+02  6.345e+01   2.109   0.0729 .
+## sumLipocavitationTreatments  2.752e-01  4.586e-01   0.600   0.5673  
+## minutesOfCardioKickBoxing    4.828e-02  3.941e-02   1.225   0.2602  
+## fat_gram                     3.815e-02  3.742e-02   1.020   0.3418  
+## calories_consumed_dayPrior   2.067e-04  1.209e-03   0.171   0.8691  
+## saturatedFat_gram           -3.475e-02  6.683e-02  -0.520   0.6192  
+## compressionSocks            -1.947e+00  1.793e+00  -1.086   0.3135  
+## morning_BM                  -1.058e-01  1.237e+00  -0.086   0.9342  
+## waistTrimmer                 2.219e-01  1.956e+00   0.113   0.9129  
+## lipocavitationPrior         -9.518e-01  9.728e-01  -0.978   0.3604  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.736 on 7 degrees of freedom
+## Multiple R-squared:  0.601,  Adjusted R-squared:  0.08801 
+## F-statistic: 1.172 on 9 and 7 DF,  p-value: 0.4269</code></pre>
+<p>There isn’t anything significant on these features for determining next day weight. Lets try and see how lipocavitation works compared with the waist trimmer on waist line measurements.</p>
+<pre class="r"><code>lipoTrimmerLM &lt;- lm(waistlineMeasurement.BellyButton ~ lipocavitationPrior + lipocavitation + sumLipocavitationTreatments + waistTrimmer, data=data)
+summary(lipoTrimmerLM)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = waistlineMeasurement.BellyButton ~ lipocavitationPrior + 
+##     lipocavitation + sumLipocavitationTreatments + waistTrimmer, 
+##     data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.06377 -0.22702  0.00141  0.18264  0.94641 
+## 
+## Coefficients:
+##                              Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)                 37.053055  17.222933   2.151   0.0461 *
+## lipocavitationPrior         -0.190916   0.378198  -0.505   0.6202  
+## lipocavitation              -0.008976   0.382218  -0.023   0.9815  
+## sumLipocavitationTreatments -0.126340   0.098969  -1.277   0.2189  
+## waistTrimmer                -0.112540   0.530419  -0.212   0.8345  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6236 on 17 degrees of freedom
+## Multiple R-squared:  0.2277, Adjusted R-squared:  0.04593 
+## F-statistic: 1.253 on 4 and 17 DF,  p-value: 0.3266</code></pre>
+<p>The results used on all the data show no significance in either using lipocavitation or a waist trimmer in determing the waistline measurement. This isn’t good at all since, the products of the 5-in-1 lipocavitation machine and the waist trimmer say they reduce fat, slim, and can make the waist smaller. The waist trimmer does make the waist smaller while wearing it and for a few hours afterwards. Lets try a different model and see how the random forest regression model does with the same variables above.</p>
+<p>See ??randomForest or R: Classification and Regression with Random Forest documentation.</p>
+<pre class="r"><code>set.seed(234)
+x &lt;- training[,c(13, 7,8,36,49)]
+
+lipoTrimmer_RF &lt;- randomForest(waistlineMeasurement.BellyButton ~ ., data = x,importance=TRUE,type=&quot;regression&quot;)
+
+summary(lipoTrimmer_RF)</code></pre>
+<pre><code>##                 Length Class  Mode     
+## call              5    -none- call     
+## type              1    -none- character
+## predicted        17    -none- numeric  
+## mse             500    -none- numeric  
+## rsq             500    -none- numeric  
+## oob.times        17    -none- numeric  
+## importance        8    -none- numeric  
+## importanceSD      4    -none- numeric  
+## localImportance   0    -none- NULL     
+## proximity         0    -none- NULL     
+## ntree             1    -none- numeric  
+## mtry              1    -none- numeric  
+## forest           11    -none- list     
+## coefs             0    -none- NULL     
+## y                17    -none- numeric  
+## test              0    -none- NULL     
+## inbag             0    -none- NULL     
+## terms             3    terms  call</code></pre>
+<pre class="r"><code>importance(lipoTrimmer_RF)</code></pre>
+<pre><code>##                                %IncMSE IncNodePurity
+## lipocavitation              -3.7947199     0.3203948
+## sumLipocavitationTreatments  8.5510193     1.6391874
+## waistTrimmer                 0.8902947     0.5396289
+## lipocavitationPrior          0.5991548     0.3952462</code></pre>
+<p>The more important feature of the above has the higher score which is the sum of lipocavitation treatments the day the waistline measurement at the belly button was taken is more important or significant on the waistline measurement for that day than having lipocavitation that day, wearing a waist trimmer, or if lipocavitation was done the day prior.</p>
+<p>We know from our models above the significant variables on predicting the weight the next day is the fat and saturated fat consumed that day. We also know that the minutes of cardio the day before and oddly the amount of fiber and protein eaten that day have significance in predicting the weight taken that day. Lets see how minutesOfCardioKickBoxing, dailyCalories, fat_gram, saturatedFat_gram, protein_gram, fiber_grams_from_carbs, and weightLiftingIncrease_lbs can predict the nextDayWeight.We will use the linear model first and then the random forest model to see the side by side results.</p>
+<pre class="r"><code>cardioDiet_LM &lt;- lm(nextDayWeight ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training)</code></pre>
+<pre class="r"><code>cardioDiet_Predict &lt;- predict(cardioDiet_LM,testing)
+
+df &lt;- as.data.frame(cbind(cardioDiet_Predict,testing$nextDayWeight))
+colnames(df) &lt;- c(&#39;predictedNextDayWeight&#39;,&#39;actualNextDayWeight&#39;)
+df$actual_PredictedError &lt;- df$actualNextDayWeight-df$predictedNextDayWeight
+df</code></pre>
+<pre><code>##    predictedNextDayWeight actualNextDayWeight actual_PredictedError
+## 1                143.3563               141.0            -2.3563179
+## 2                143.4791               142.0            -1.4790507
+## 6                142.8486               145.4             2.5514497
+## 11               145.8255               145.4            -0.4255159
+## 18               146.3583               147.2             0.8417243</code></pre>
+<p>The predicted weights weren’t off by more than 2.55 lbs and the closest predicted weight was within 1/2 lb. Lets look at the summary of what these features’ weighted predictions as a linear model.</p>
+<pre class="r"><code>summary(cardioDiet_LM)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = nextDayWeight ~ minutesOfCardioKickBoxing + dailyCalories + 
+##     fat_gram + saturatedFat_gram + protein_gram + fiber_grams_from_carbs + 
+##     weightLiftingIncrease_lbs, data = training)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.59927 -0.90120  0.07726  0.85424  2.18542 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                1.406e+02  3.275e+00  42.933 1.01e-11 ***
+## minutesOfCardioKickBoxing  4.250e-02  4.278e-02   0.993    0.346    
+## dailyCalories             -1.622e-04  2.297e-03  -0.071    0.945    
+## fat_gram                   5.005e-02  3.340e-02   1.498    0.168    
+## saturatedFat_gram         -6.579e-02  6.033e-02  -1.090    0.304    
+## protein_gram               1.809e-02  2.992e-02   0.604    0.560    
+## fiber_grams_from_carbs     3.431e-03  4.974e-02   0.069    0.947    
+## weightLiftingIncrease_lbs  1.090e-02  3.568e-02   0.306    0.767    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.747 on 9 degrees of freedom
+## Multiple R-squared:   0.48,  Adjusted R-squared:  0.07554 
+## F-statistic: 1.187 on 7 and 9 DF,  p-value: 0.396</code></pre>
+<p>In the linear model above, none of the features we selected were significant as none of the p-values are less than 0.05 at the 95% confidence interval and 5% significance level. And before that the predicted side by side comparison to the actual values in our hold out set or testing set predicted within 1/2-3 lb weight differences the next day. But our summary shows that for every 4.25 minutes of cardio the weight the next day is a pound heavier, a decrease in calories of 1.62 will increase weight a lb, increasing the fat gram intake to 5.01 will increase weight a lb next day, but lowering the saturated fat grams by 6.58 will also increase the weight the next day, increasing protein gram intake to 1.81 will increase weight 1 lb, increasing fiber gram intake increases weight a lb, and increasing the weight used when weightlifting to 1.09 lbs increases weight a lb. Which honestly all doesn’t make sense, but that is why the linear model isn’t the best model but a good way of approximating an outcome. Since none of these features are significant together when predicting next day weight. Lets see how they do with waist measurements the next day before testing with the random forest model. Which uses linear and multinomial naive bayes with different tuning parameters as an ensemble of models to pick or vote the best model that gets closest to the actual value.</p>
+<pre class="r"><code>cardioDiet_LM2 &lt;- lm(nextDayWaistLineMeasurement ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training)</code></pre>
+<pre class="r"><code>cardioDiet_Predict2 &lt;- predict(cardioDiet_LM2,testing)
+
+df2 &lt;- as.data.frame(cbind(cardioDiet_Predict2,testing$nextDayWaistLineMeasurement))
+colnames(df2) &lt;- c(&#39;predictedNextDayWaistMeasurement&#39;,&#39;actualNextDayWaistMeasurement&#39;)
+df2$actual_PredictedError &lt;- df2$actualNextDayWaistMeasurement-df2$predictedNextDayWaistMeasurement
+df2</code></pre>
+<pre><code>##    predictedNextDayWaistMeasurement actualNextDayWaistMeasurement
+## 1                          32.55407                         33.00
+## 2                          32.03338                         33.25
+## 6                          31.54411                         32.00
+## 11                         33.42217                         33.00
+## 18                         32.99826                         33.50
+##    actual_PredictedError
+## 1              0.4459321
+## 2              1.2166232
+## 6              0.4558903
+## 11            -0.4221655
+## 18             0.5017395</code></pre>
+<p>The error in predicting the next day waist line measurement was from under predicting 2/5&quot; to over predicting by 1 1/5“. Lets look at the summary noting that most of the predicted values were within 1/2” accuracy.</p>
+<pre class="r"><code>summary(cardioDiet_LM2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = nextDayWaistLineMeasurement ~ minutesOfCardioKickBoxing + 
+##     dailyCalories + fat_gram + saturatedFat_gram + protein_gram + 
+##     fiber_grams_from_carbs + weightLiftingIncrease_lbs, data = training)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.57893 -0.36861 -0.09497  0.43451  0.59401 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               30.7226895  1.0177999  30.185 2.35e-10 ***
+## minutesOfCardioKickBoxing -0.0044475  0.0132927  -0.335   0.7456    
+## dailyCalories              0.0012651  0.0007138   1.772   0.1101    
+## fat_gram                   0.0006183  0.0103788   0.060   0.9538    
+## saturatedFat_gram         -0.0373820  0.0187478  -1.994   0.0773 .  
+## protein_gram               0.0016228  0.0092990   0.175   0.8653    
+## fiber_grams_from_carbs    -0.0018406  0.0154577  -0.119   0.9078    
+## weightLiftingIncrease_lbs  0.0206342  0.0110860   1.861   0.0956 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.543 on 9 degrees of freedom
+## Multiple R-squared:  0.6772, Adjusted R-squared:  0.4262 
+## F-statistic: 2.698 on 7 and 9 DF,  p-value: 0.0837</code></pre>
+<p>We also can see from the linear model above that these features as a set aren’t significant in predicting the next day waist line measurement at the 5% significance level. But lets interpret what it says about these features. The minutes of cardio, daily calories, protein, fiber, and fat intake are less than 1% of influencing the increase in the waist line measurement the next day by 1&quot; but decreasing the saturated fat by 3.7% and increasing the weight by 2% will have an affect on increasing the next day waist line measurement by 1.&quot;</p>
+<p>Lets now see what our random forest models of these two linear modeled features says about next day weight and waist line measurements.</p>
+<pre class="r"><code>cardioDiet_RF &lt;- randomForest(nextDayWeight ~ minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training, importance=TRUE,type=&quot;regression&quot;)
+
+summary(cardioDiet_RF)</code></pre>
+<pre><code>##                 Length Class  Mode     
+## call              5    -none- call     
+## type              1    -none- character
+## predicted        17    -none- numeric  
+## mse             500    -none- numeric  
+## rsq             500    -none- numeric  
+## oob.times        17    -none- numeric  
+## importance       14    -none- numeric  
+## importanceSD      7    -none- numeric  
+## localImportance   0    -none- NULL     
+## proximity         0    -none- NULL     
+## ntree             1    -none- numeric  
+## mtry              1    -none- numeric  
+## forest           11    -none- list     
+## coefs             0    -none- NULL     
+## y                17    -none- numeric  
+## test              0    -none- NULL     
+## inbag             0    -none- NULL     
+## terms             3    terms  call</code></pre>
+<pre class="r"><code>importance(cardioDiet_RF)</code></pre>
+<pre><code>##                              %IncMSE IncNodePurity
+## minutesOfCardioKickBoxing  2.7962162      3.817400
+## dailyCalories             -0.9975809      5.724532
+## fat_gram                   6.2365289     10.368967
+## saturatedFat_gram          0.5513062      5.733871
+## protein_gram               1.3094408      8.768735
+## fiber_grams_from_carbs    -1.3514179      4.921447
+## weightLiftingIncrease_lbs -0.6969332      1.517586</code></pre>
+<p>From the above importance of features measures we can see that the most important feature in predicting next day weight using our random forest model is the fat grams consumed a day before the weight measurement, the next important is the protein grams consumed, and after that is the saturated fat then daily calories, fiber, minutes of cardio, and finally least important is the increase in weight during weight lifting the day before the weight measurement is taken.</p>
+<pre class="r"><code>cardioDiet_Predict_RF &lt;- predict(cardioDiet_RF,testing)
+
+df3 &lt;- as.data.frame(cbind(cardioDiet_Predict_RF,testing$nextDayWeight))
+colnames(df3) &lt;- c(&#39;predictedNextDayWeight&#39;,&#39;actualNextDayWeight&#39;)
+df3$actual_PredictedError &lt;- df3$actualNextDayWeight-df3$predictedNextDayWeight
+df3</code></pre>
+<pre><code>##    predictedNextDayWeight actualNextDayWeight actual_PredictedError
+## 1                143.7762               141.0            -2.7762333
+## 2                144.2383               142.0            -2.2383000
+## 6                143.5542               145.4             1.8457800
+## 11               145.1989               145.4             0.2011133
+## 18               145.7889               147.2             1.4110533</code></pre>
+<p>The results above show how the random forest model predicted the actual weight - the predicted weight as an error. The range in prediction values is from under predicting 2.78 lbs to overpredicting by 1.85 lbs.</p>
+<p>Now, we will look at how our features predict the next day waist measurement with our random forest algorithm.</p>
+<pre class="r"><code>cardioDiet_RF2 &lt;- randomForest(nextDayWaistLineMeasurement ~ 
+                                 minutesOfCardioKickBoxing +
+                      dailyCalories +
+                      fat_gram +
+                      saturatedFat_gram +
+                      protein_gram + 
+                      fiber_grams_from_carbs +
+                      weightLiftingIncrease_lbs,
+                    data = training, importance=TRUE,type=&quot;regression&quot;)
+
+summary(cardioDiet_RF2)</code></pre>
+<pre><code>##                 Length Class  Mode     
+## call              5    -none- call     
+## type              1    -none- character
+## predicted        17    -none- numeric  
+## mse             500    -none- numeric  
+## rsq             500    -none- numeric  
+## oob.times        17    -none- numeric  
+## importance       14    -none- numeric  
+## importanceSD      7    -none- numeric  
+## localImportance   0    -none- NULL     
+## proximity         0    -none- NULL     
+## ntree             1    -none- numeric  
+## mtry              1    -none- numeric  
+## forest           11    -none- list     
+## coefs             0    -none- NULL     
+## y                17    -none- numeric  
+## test              0    -none- NULL     
+## inbag             0    -none- NULL     
+## terms             3    terms  call</code></pre>
+<pre class="r"><code>importance(cardioDiet_RF2)</code></pre>
+<pre><code>##                              %IncMSE IncNodePurity
+## minutesOfCardioKickBoxing -0.3418183     0.3021152
+## dailyCalories              3.4290305     1.1346708
+## fat_gram                   1.2520613     1.1028453
+## saturatedFat_gram          0.5654202     0.9595589
+## protein_gram               6.8376789     1.4658899
+## fiber_grams_from_carbs     2.4185185     0.9447107
+## weightLiftingIncrease_lbs  3.1181626     0.8624853</code></pre>
+<pre class="r"><code>cardioDiet_Predict_RF2 &lt;- predict(cardioDiet_RF2,testing)
+
+df4 &lt;- as.data.frame(cbind(cardioDiet_Predict_RF2,
+                           testing$nextDayWaistLineMeasurement))
+colnames(df4) &lt;- c(&#39;predictedNextDayWaist&#39;,&#39;actualNextDayWaist&#39;)
+df4$actual_PredictedError &lt;- df4$actualNextDayWaist-df4$predictedNextDayWaist
+df4</code></pre>
+<pre><code>##    predictedNextDayWaist actualNextDayWaist actual_PredictedError
+## 1               32.17534              33.00            0.82465833
+## 2               32.45074              33.25            0.79925833
+## 6               32.01032              32.00           -0.01031667
+## 11              32.99145              33.00            0.00855000
+## 18              32.96116              33.50            0.53884167</code></pre>
+<p>Above we can see the data frame of predicted waistline measurements to actual waistline measurements and the error in actual-predicted. The error is in a range of 1/100th of an inch to about 4/5&quot; in predicting the next day waistline measurement. Slightly better than our linear model for predicting the next day waistline measurement.</p>
+<p>We made the time variables earlier that are actually time or date features recognized by R, but now I am going to see what findings can be plotted to visualize what these features do to the waistline measurements and weight measurements using Tableau. Lets write this new data of elements to our csv file for plotting in Tableau. But before we do, lets just see what these features are with a str().</p>
+<pre class="r"><code>str(data)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    22 obs. of  49 variables:
+##  $ weekDay.Date                    : Factor w/ 7 levels &quot;Fri&quot;,&quot;Mon&quot;,&quot;Sat&quot;,..: 2 6 7 5 1 3 4 2 6 7 ...
+##  $ Day                             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Date                            : chr  &quot;1-4-2021&quot; &quot;1-5-2021&quot; &quot;1-6-2021&quot; &quot;1-7-2021&quot; ...
+##  $ time                            : Factor w/ 8 levels &quot;2:00 PM&quot;,&quot;3:00 PM&quot;,..: 7 7 5 7 4 3 1 7 7 5 ...
+##  $ weatherAtWorkoutTime            : int  51 48 48 53 63 73 70 60 53 43 ...
+##  $ minutesOfCardioKickBoxing       : int  20 20 0 30 30 25 0 20 20 0 ...
+##  $ lipocavitation                  : int  1 0 1 0 0 1 0 1 0 1 ...
+##  $ sumLipocavitationTreatments     : int  1 1 2 2 2 3 3 4 4 5 ...
+##  $ timeMeasurementsTaken           : Factor w/ 19 levels &quot;11:30 AM&quot;,&quot;11:45 AM&quot;,..: 7 4 10 3 17 12 14 10 1 9 ...
+##  $ weightScaleMeasurement          : num  142 141 142 143 144 ...
+##  $ weightChangeFromDayPrior        : num  0 -1 1 1 1 3.6 -2.2 -3.6 4.8 -2.8 ...
+##  $ calories_consumed_dayPrior      : num  1826 1826 1884 2508 1812 ...
+##  $ waistlineMeasurement.BellyButton: num  33.5 33 33.2 33 33 ...
+##  $ armMeasurementInches.R          : num  12 11.8 12 12 12 ...
+##  $ armMeasurementInches.L          : num  12.2 11.5 12 12 12 ...
+##  $ thighMeasurementInches.R        : num  22.6 23.5 23.2 23.8 24 ...
+##  $ thighMeasurementInches.L        : num  22.6 23.5 23.2 23.8 24 ...
+##  $ absFat.MM.R                     : int  30 22 20 22 24 22 22 22 20 20 ...
+##  $ absFat.MM.L                     : int  30 22 20 22 24 22 22 22 20 22 ...
+##  $ tricepsFat.MM.R                 : int  26 22 20 20 22 22 22 22 22 20 ...
+##  $ tricepsFat.MM.L                 : int  28 22 20 20 24 22 22 22 22 20 ...
+##  $ innerThighFat.MM.R              : int  28 22 16 22 16 16 16 14 12 12 ...
+##  $ innerThighFat.MM.L              : int  28 20 16 22 16 20 20 14 12 12 ...
+##  $ dailyCalories                   : num  1826 1884 2508 1812 1963 ...
+##  $ fat_gram                        : num  41.5 61.2 72 59 73.8 ...
+##  $ saturatedFat_gram               : num  11.5 31.2 38.5 16 18.8 ...
+##  $ protein_gram                    : num  42 63 82 62 67.2 ...
+##  $ carbs_grams                     : num  172 236 371 280 292 ...
+##  $ fiber_grams_from_carbs          : num  29.5 32 45 49 46 16 47 43 45 55 ...
+##  $ sodiumDailyIntake               : num  1526 3729 5349 1673 2852 ...
+##  $ coffee_cups                     : int  2 2 2 2 2 2 2 2 2 2 ...
+##  $ morning_BM                      : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ MenstruationDay                 : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ weightLiftingIncrease_lbs       : int  0 5 0 10 0 0 0 50 45 0 ...
+##  $ weightLiftingDecrease_lbs       : int  0 0 0 0 0 -10 0 0 0 0 ...
+##  $ waistTrimmer                    : int  32 32 32 32 32 32 32 32 32 32 ...
+##  $ compressionSocks                : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ HoursOfSleep                    : num  7 8.5 7.5 10 7.5 9.5 9 9.5 8.5 8 ...
+##  $ glutenFree                      : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ alcoholFree                     : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ processedSweetsFree             : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ butterAddedFree                 : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ meatFree                        : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Date_PacificTime                : POSIXct, format: &quot;2021-01-04 09:00:00&quot; &quot;2021-01-05 09:00:00&quot; ...
+##  $ weekDay                         : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 2 3 4 5 6 7 1 2 3 4 ...
+##  $ minutesCardioDayPrior           : num  0 20 20 0 30 30 25 0 20 20 ...
+##  $ nextDayWeight                   : num  141 142 143 144 148 ...
+##  $ nextDayWaistLineMeasurement     : num  33 33.2 33 33 32 ...
+##  $ lipocavitationPrior             : num  0 1 0 1 0 0 1 0 1 0 ...</code></pre>
+<p>Great looks good. Now we will write this out to csv.</p>
+<pre class="r"><code>write.csv(data,&#39;ML_21dayResearch_addedFeatures.csv&#39;,row.names=F)</code></pre>
+<hr />
+<p>I have a blog that I need to post to inform clients on the effects of lipocavitation added to massage for reducing fat and body circumference and thereby having a positive affect in combination with lymphatic drainage as less body weight or pressure surrounding the lymph vessels and veins will lead to better circulation and less edema in the body limbs. Lets see how lipocavitation and the number of lipocavitation treatments are effective in reducing fat content by looking at any of the areas treated, like the abs, arms, or legs and only use those lipocavitation variables.</p>
+<pre class="r"><code>lipocavitation_RF &lt;- randomForest(innerThighFat.MM.R ~ 
+                                 sumLipocavitationTreatments +
+                      lipocavitationPrior,
+                    data = training, importance=TRUE,type=&quot;regression&quot;)</code></pre>
+<pre><code>## Warning in randomForest.default(m, y, ...): The response has five or fewer
+## unique values. Are you sure you want to do regression?</code></pre>
+<pre class="r"><code>summary(lipocavitation_RF)</code></pre>
+<pre><code>##                 Length Class  Mode     
+## call              5    -none- call     
+## type              1    -none- character
+## predicted        17    -none- numeric  
+## mse             500    -none- numeric  
+## rsq             500    -none- numeric  
+## oob.times        17    -none- numeric  
+## importance        4    -none- numeric  
+## importanceSD      2    -none- numeric  
+## localImportance   0    -none- NULL     
+## proximity         0    -none- NULL     
+## ntree             1    -none- numeric  
+## mtry              1    -none- numeric  
+## forest           11    -none- list     
+## coefs             0    -none- NULL     
+## y                17    -none- numeric  
+## test              0    -none- NULL     
+## inbag             0    -none- NULL     
+## terms             3    terms  call</code></pre>
+<pre class="r"><code>importance(lipocavitation_RF)</code></pre>
+<pre><code>##                               %IncMSE IncNodePurity
+## sumLipocavitationTreatments 13.678434      72.06128
+## lipocavitationPrior         -5.742658      11.67883</code></pre>
+<p>The sum of the lipocavitation treatments prior to taking the thigh fat caliper measure in MM is more important than if lipocavitation was done the day before or prior to the measurement.</p>
+<p>Lets see these predicted values next to our actual measurements.</p>
+<pre class="r"><code>lipocavitation_Predict_RF &lt;- predict(lipocavitation_RF,testing)
+
+df5 &lt;- as.data.frame(cbind(lipocavitation_Predict_RF,
+                           testing$innerThighFat.MM.R))
+colnames(df5) &lt;- c(&#39;predicted_R_ThighMeasure&#39;,&#39;actual_R_ThighMeasure&#39;)
+df5$actual_PredictedError &lt;- df5$actual_R_ThighMeasure-df5$predicted_R_ThighMeasure
+df5</code></pre>
+<pre><code>##    predicted_R_ThighMeasure actual_R_ThighMeasure actual_PredictedError
+## 1                  15.82586                    28            12.1741397
+## 2                  17.17285                    22             4.8271504
+## 6                  15.44627                    16             0.5537267
+## 11                 12.98615                    12            -0.9861457
+## 18                 13.28555                    14             0.7144543</code></pre>
+<p>Lets look at the linear model for predicting thigh fat MM measurements using the same lipocavitation features.</p>
+<pre class="r"><code>lipocavitation_ML &lt;- lm(innerThighFat.MM.L ~ 
+                                 sumLipocavitationTreatments +
+                      lipocavitationPrior,
+                    data = training)
+
+summary(lipocavitation_ML)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = innerThighFat.MM.L ~ sumLipocavitationTreatments + 
+##     lipocavitationPrior, data = training)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.6134 -0.6535 -0.1789  0.9695  3.7636 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                  17.5224     1.4617  11.987 9.48e-09 ***
+## sumLipocavitationTreatments  -0.8115     0.2204  -3.682  0.00246 ** 
+## lipocavitationPrior           2.3369     1.1291   2.070  0.05745 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.201 on 14 degrees of freedom
+## Multiple R-squared:  0.594,  Adjusted R-squared:  0.5359 
+## F-statistic: 10.24 on 2 and 14 DF,  p-value: 0.00182</code></pre>
+<p>The above summary shows that the sum of lipocavitation treatments is significant at the 5% significance level for predicting the thigh measurement of the left thigh in mm of fat. Whether or not lipocavitation was done the day prior is not significant. But the measurement of the thigh fat increases 1 mm for every decrease in the sum of previous lipocavitation treatments of 81.1% from the next sum, or almost every treatment of lipocavitation will decrease the thigh fat measurements by an MM. The error with linear models is that the values can range outside of 0-100% of probability that is supposed to be between 0 and 1. So that not doing lipocavitation or having a sum of zero lipocavitations implies that the fat measurement on the left thigh will be increasing 81.1% of a MM and that a sum of lipocavitation treatments greater than 37 treatments will give a left thigh measurement of less than 0 if starting from 30 MM and decreasing by approximately 3/4 MM each treatment.</p>
+<pre class="r"><code>30/0.811</code></pre>
+<pre><code>## [1] 36.99137</code></pre>
+<p>The above shows how many times 3/4 approximately goes into the maximum left thigh measure in MM. Those probabilities next to reality are not likely. But lets see the range that is more realistic for our predicted linear model results compared to actual left thigh measurements in MM.</p>
+<pre class="r"><code>lipocavitation_Predict_ML &lt;- predict(lipocavitation_ML,testing)
+
+df6 &lt;- as.data.frame(cbind(lipocavitation_Predict_ML,
+                           testing$innerThighFat.MM.L))
+colnames(df6) &lt;- c(&#39;predicted_L_ThighMeasure&#39;,&#39;actual_L_ThighMeasure&#39;)
+df6$actual_PredictedError &lt;- df6$actual_L_ThighMeasure-df6$predicted_L_ThighMeasure
+df6</code></pre>
+<pre><code>##    predicted_L_ThighMeasure actual_L_ThighMeasure actual_PredictedError
+## 1                  16.71092                    28            11.2890779
+## 2                  19.04785                    20             0.9521495
+## 6                  15.08795                    20             4.9120462
+## 11                 15.80191                    14            -1.8019140
+## 18                 13.36746                    12            -1.3674616</code></pre>
+<p>Our results show that the linear model over predicted the left thigh fat measurement in MM by up to 11.3 MM and under predicted as low as 4.9 MM using just the sum of lipocavitation treatments and whether or not lipocavitation was done the day before or prior to the left thigh measurement.</p>
 
 
 
